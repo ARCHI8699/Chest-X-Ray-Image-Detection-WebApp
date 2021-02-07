@@ -13,7 +13,7 @@ from pre_process import path_to_tensor, getting_two_layer_weights, CAM_func
 
 app = Flask(__name__)
 app.secret_key='nhotwani'
-ensemble_model = load_model("./weights/ensemble_model.hdf5")
+ensemble_model = load_model("weights/ensemble_model.hdf5")
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
