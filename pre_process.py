@@ -5,7 +5,6 @@ from keras.models import load_model, Model
 from keras.layers import Dense, GlobalAveragePooling2D, Flatten, Input, Average
 import numpy as np
 import scipy
-import cv2
 
 # Converting a given image into tensor
 def path_to_tensor(data_path):
