@@ -27,7 +27,7 @@ body::after {
   bottom: 0;
   right: 0;
   position: absolute;
-  z-index: -1;   
+  z-index: -1; 
 }
 .center {
   display: block;
@@ -50,12 +50,12 @@ body::after {
 
 <div class="col-6">
 <h3 style="margin-top:2%;text-align:center;"><b>ORIGINAL IMAGE</b></h3>
-<img src="static/results/image1.jpg" class="center"/>
+<img src="{{ url_for('static', filename = 'results/image1.jpg') }}" class="center"/>
 </div>
 
 <div class="col-6">
 <h3 style="margin-top:2%;text-align:center;"><b>GRAD-CAM COLOR MAP</b></h3>
-<img src="static/results/image2.jpg" class="center"/>
+<img src="{{ url_for('static', filename = 'results/image2.jpg') }}" class="center"/>
 </div>
 </div>
 

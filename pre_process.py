@@ -5,6 +5,7 @@ from keras.models import load_model, Model
 from keras.layers import Dense, GlobalAveragePooling2D, Flatten, Input, Average
 import numpy as np
 import scipy
+import cv2
 
 # Converting a given image into tensor
 def path_to_tensor(data_path):
@@ -17,7 +18,7 @@ def path_to_tensor(data_path):
 
 def getting_two_layer_weights():
     # Importing the model
-    model = load_model("./weights/mobilenet.hdf5")
+    model = load_model("weights/mobilenet.hdf5")
     # Getting the AMP layer weight
     all_amp_layer_weights = model.layers[-1].get_weights()[0]
     # Extracting the wanted output

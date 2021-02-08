@@ -1,5 +1,6 @@
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
+from gevent.pywsgi import WSGIServer
 
 import keras
 from keras.models import load_model
@@ -59,7 +60,7 @@ def result():
         if img_file:
             passed = False
             try:
-                filename = img_file.filename
+                filename = secure_filename(img_file.filename)
                 filepath = os.path.join("static/uploads/", filename)
                 img_file.save(filepath)
                 passed = True
@@ -82,21 +83,21 @@ def result():
                 ensembled_model, all_amp_layer_weights = getting_two_layer_weights()
                 # Saving GRAD-CAM image
                 plt.ioff()
-                fig = plt.figure(figsize = (5, 5))
+                fig = plt.figure(figsize = (5, 7))
                 plt.imshow(image_to_predict.squeeze())
                 plt.xticks([])
                 plt.yticks([])
-                plt.savefig("static/results/image1.jpg")
+                plt.savefig("static/results/image1.jpg", bbox_inches='tight', pad_inches=0.1)
                 plt.close(fig)
 
-                fig = plt.figure(figsize=(5, 5))
+                fig = plt.figure(figsize=(5, 7))
                 CAM, pred = CAM_func(filepath, ensembled_model, all_amp_layer_weights)
                 CAM = (CAM - CAM.min()) / (CAM.max() - CAM.min())
                 plt.imshow(image_to_predict.squeeze(), vmin=0, vmax=255)
                 plt.imshow(CAM, cmap = "jet", alpha = 0.2, interpolation='nearest', vmin=0, vmax=1)
                 plt.xticks([])
                 plt.yticks([])
-                plt.savefig("static/results/image2.jpg")
+                plt.savefig("static/results/image2.jpg", bbox_inches='tight', pad_inches=0.1)
                 plt.close(fig)
 
                 return render_template("result.html", pred=answer[np.argmax(prediction)], final_result=prediction_final)
@@ -109,4 +110,6 @@ def result():
 
 
 if __name__ == '__main__':
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
     app.run()
