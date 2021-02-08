@@ -17,7 +17,7 @@ def path_to_tensor(data_path):
 
 def getting_two_layer_weights():
     # Importing the model
-    model = load_model("weights/mobilenet.hdf5")
+    model = load_model("mobilenet.hdf5")
     # Getting the AMP layer weight
     all_amp_layer_weights = model.layers[-1].get_weights()[0]
     # Extracting the wanted output
